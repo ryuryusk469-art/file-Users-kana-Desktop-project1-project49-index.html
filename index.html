@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JLPT N5 よく出る質問と単語 🌸 JLPT N5 Common Questions & Vocabulary</title>
+<style>
+body {
+  font-family: "Noto Sans JP", sans-serif;
+  background: #fffaf5
+ url('https://upload.wikimedia.org/wikipedia/commons/3/3a/Asanoha_pattern.svg') repeat;
+  background-size: 200px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  color: #333;
+}
+header {
+  background: linear-gradient(135deg, #ffb6c1
+, #ffd700
+);
+  padding: 20px;
+  color: #fff;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px #00000055;
+}
+.container {
+  max-width: 900px;
+  margin: 20px auto;
+  background: #ffffffcc;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+.section {
+  margin: 20px 0;
+  padding: 15px;
+  border-radius: 10px;
+  background: #fff0f5
+;
+  transition: all 0.5s ease;
+}
+.section:hover {
+  transform: scale(1.02);
+}
+h2 {
+  color: #ff69b4
+;
+}
+ruby {
+  font-size: 1.2em;
+}
+rt {
+  font-size: 0.6em;
+  color: #555;
+}
+button.audio-btn {
+  background: #ffd700
+;
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+.example {
+  background: #fef6e4
+;
+  border: 2px solid #ffb6c1
+;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 10px;
+}
+.quiz {
+  background: #e6f7ff
+;
+  border: 2px solid #87cefa
+;
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 20px;
+}
+button.choice {
+  background: #fff;
+  border: 2px solid #ff69b4
+;
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+button.choice:hover {
+  background: #ff69b4
+;
+  color: #fff;
+}
+#score {
+  font-size: 1.2em;
+  color: #ff1493
+;
+  margin-top: 10px;
+}
+.next-btn {
+  background: #ffd700
+;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: 1em;
+}
+.encourage {
+  font-size: 1.1em;
+  color: #ff69b4
+;
+  margin-top: 10px;
+}
+@media (max-width: 600px) {
+  .container { width: 90%; }
+}
+</style>
+</head>
+<body>
+<header>
+  JLPT N5 <ruby>よく出<rt>よくで</rt></ruby>る<ruby>質問<rt>しつもん</rt></ruby>と<ruby>単語<rt>たんご</rt></ruby><br>
+  🌸 JLPT N5 Common Questions & Vocabulary 🌸
+</header>
+
+<div class="container" id="content"></div>
+
+<div class="quiz" id="quiz">
+  <h2>🎯 Practice Quiz / 練習クイズ</h2>
+  <p id="question"></p>
+  <div id="choices"></div>
+  <p id="score"></p>
+  <button class="next-btn" onclick="nextQuestion()">➡️ Next Question / つぎへ</button>
+  <p class="encourage" id="encourage"></p>
+</div>
+
+<script>
+const sections = [
+  {
+    title: "What time - 何時 (なんじ)",
+    jp: "<ruby>何時<rt>なんじ</rt></ruby>",
+    en: "What time",
+    examples: [
+      {jp:"<ruby>今<rt>いま</rt></ruby>、<ruby>何時<rt>なんじ</rt></ruby>ですか？", en:"What time is it now?"},
+      {jp:"<ruby>何時<rt>なんじ</rt></ruby>に<ruby>起<rt>お</rt></ruby>きますか？", en:"What time do you wake up?"},
+      {jp:"<ruby>授業<rt>じゅぎょう</rt></ruby>は<ruby>何時<rt>なんじ</rt></ruby>に<ruby>始<rt>はじ</rt></ruby>まりますか？", en:"What time does class start?"}
+    ]
+  },
+  {
+    title: "How long - どのくらい",
+    jp: "<ruby>どのくらい</ruby>",
+    en: "How long",
+    examples: [
+      {jp:"<ruby>どのくらい</ruby><ruby>かかります</ruby>か？", en:"How long does it take?"},
+      {jp:"<ruby>日本<rt>にほん</rt></ruby>に<ruby>どのくらい</ruby><ruby>います</ruby>か？", en:"How long will you be in Japan?"},
+      {jp:"<ruby>どのくらい</ruby><ruby>勉強<rt>べんきょう</rt></ruby>しますか？", en:"How long do you study?"}
+    ]
+  },
+  {
+    title: "When - いつ",
+    jp: "<ruby>いつ</ruby>",
+    en: "When",
+    examples: [
+      {jp:"<ruby>いつ</ruby><ruby>行<rt>い</rt></ruby>きますか？", en:"When will you go?"},
+      {jp:"<ruby>誕生日<rt>たんじょうび</rt></ruby>は<ruby>いつ</ruby>ですか？", en:"When is your birthday?"},
+      {jp:"<ruby>いつ</ruby><ruby>日本<rt>にほん</rt></ruby>に<ruby>来<rt>き</rt></ruby>ましたか？", en:"When did you come to Japan?"}
+    ]
+  },
+  {
+    title: "Where - どこ",
+    jp: "<ruby>どこ</ruby>",
+    en: "Where",
+    examples: [
+      {jp:"トイレは<ruby>どこ</ruby>ですか？", en:"Where is the toilet?"},
+      {jp:"<ruby>どこ</ruby>に<ruby>住<rt>す</rt></ruby>んでいますか？", en:"Where do you live?"},
+      {jp:"<ruby>どこ</ruby>で<ruby>買<rt>か</rt></ruby>いましたか？", en:"Where did you buy it?"}
+    ]
+  },
+  {
+    title: "Bring - 持ってくる (もってくる)",
+    jp: "<ruby>持<rt>も</rt></ruby>ってくる",
+    en: "to bring",
+    examples: [
+      {jp:"<ruby>本<rt>ほん</rt></ruby>を<ruby>持<rt>も</rt></ruby>ってきてください。", en:"Please bring a book."},
+      {jp:"<ruby>傘<rt>かさ</rt></ruby>を<ruby>持<rt>も</rt></ruby>ってきました。", en:"I brought an umbrella."},
+      {jp:"<ruby>明日<rt>あした</rt></ruby>、<ruby>お弁当<rt>おべんとう</rt></ruby>を<ruby>持<rt>も</rt></ruby>ってきます。", en:"I will bring a lunch box tomorrow."}
+    ]
+  }
+];
+
+const content = document.getElementById("content");
+sections.forEach(sec=>{
+  const div=document.createElement("div");
+  div.className="section";
+  div.innerHTML=`
+    <h2>${sec.title} <button class="audio-btn" onclick="playAudio('${extractKanji(sec.jp)}')">🔊</button></h2>
+    <p><strong>${sec.jp}</strong> — ${sec.en}</p>
+    ${sec.examples.map(ex=>`
+      <div class="example">
+        <p>${ex.jp} <button class="audio-btn" onclick="playAudio('${extractKanji(ex.jp)}')">🔊</button></p>
+        <p>${ex.en}</p>
+      </div>`).join('')}
+  `;
+  content.appendChild(div);
+});
+
+function extractKanji(html){
+  // Remove rt tags and their content, keep only ruby base text
+  return html.replace(/<rt>.*?<\/rt>/g, '').replace(/<\/?[^>]+(>|$)/g, '');
+}
+
+function playAudio(text){
+  const clean = extractKanji(text);
+  const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(clean)}&tl=ja&client=tw-ob`;
+  const audio = new Audio(url);
+  audio.play();
+}
+
+// Quiz
+const quizData=[
+  {q:"「何時ですか？」 means:", choices:["Where is it?","What time is it?","How long is it?"], a:1},
+  {q:"「どのくらいかかりますか？」 means:", choices:["How long does it take?","When will it start?","Where is it?"], a:0},
+  {q:"「いつ行きますか？」 means:", choices:["When will you go?","Where will you go?","How long will you go?"], a:0},
+  {q:"「どこですか？」 means:", choices:["What time is it?","Where is it?","How long is it?"], a:1},
+  {q:"「持ってくる」 means:", choices:["to bring","to eat","to go"], a:0}
+];
+let current=0, score=0;
+function loadQuestion(){
+  const q=quizData[current];
+  document.getElementById("question").innerText=q.q;
+  const choicesDiv=document.getElementById("choices");
+  choicesDiv.innerHTML="";
+  q.choices.forEach((c,i)=>{
+    const btn=document.createElement("button");
+    btn.className="choice";
+    btn.innerText=c;
+    btn.onclick=()=>checkAnswer(i);
+    choicesDiv.appendChild(btn);
+  });
+  document.getElementById("score").innerText=`Score: ${score}/${quizData.length}`;
+  document.getElementById("encourage").innerText="";
+}
+function checkAnswer(i){
+  if(i===quizData[current].a){
+    score++;
+    document.getElementById("encourage").innerText="🌸 Correct! / 正解！すばらしい！";
+  }else{
+    document.getElementById("encourage").innerText="😅 Try again! / もういちど！";
+  }
+  document.getElementById("score").innerText=`Score: ${score}/${quizData.length}`;
+}
+function nextQuestion(){
+  current++;
+  if(current>=quizData.length){
+    document.getElementById("encourage").innerText=`🎉 Finished! Your score: ${score}/${quizData.length} / がんばりました！`;
+    current=0; score=0;
+  }
+  loadQuestion();
+}
+loadQuestion();
+</script>
+</body>
+</html>
+
